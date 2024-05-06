@@ -1,26 +1,44 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   exec_philo.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mda-cunh <mda-cunh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/03 10:47:09 by mda-cunh          #+#    #+#             */
-/*   Updated: 2024/05/06 12:32:26 by mda-cunh         ###   ########.fr       */
+/*   Created: 2024/05/06 12:31:29 by mda-cunh          #+#    #+#             */
+/*   Updated: 2024/05/06 14:59:19 by mda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int main(int argc, char **argv)
+void	*routine(void *arg)
 {
-	t_data data;
+	t_phiphi *data;
+
+	data = (t_phiphi *)arg;
 	
-	if (argc < 5 || argc > 6)
-		exit (123);
-	if (check_args(&data, argv))
-		exit(123);
-	if (parse_args(&data, argv))
-		exit(123);
-	if (launch_philo(&data));
+	
+}
+
+int launch_philo(t_data *data)
+{
+	int i;
+	
+	i = 0;
+	while (i < data->nb_pilo)
+	{
+		if (pthread_create(&data->philo[i].t_id, NULL, routine, &data->philo[i]))
+			return (2);
+		i++;
+	}
+	i = 0;
+	while (i < data->nb_pilo)
+	{
+		if (pthread_join(&data->philo[i].t_id, NULL))
+			return (2);
+		i++;
+	}
+	
+	
 }

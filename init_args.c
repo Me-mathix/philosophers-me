@@ -6,7 +6,7 @@
 /*   By: mda-cunh <mda-cunh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 11:47:56 by mda-cunh          #+#    #+#             */
-/*   Updated: 2024/05/03 13:32:45 by mda-cunh         ###   ########.fr       */
+/*   Updated: 2024/05/06 14:19:09 by mda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void init_philo(t_data *data)
 	i = 0;
 	while(i < data->nb_pilo)
 	{
-		data->philo->id = i;
+		data->philo->id = i + 1;
 		data->philo->last_meal = 0;
 		data->philo->r_fork = data->fork[i];
 		data->philo->l_fork = data->fork[(1 + i) % data->nb_pilo];

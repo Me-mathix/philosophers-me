@@ -6,7 +6,7 @@
 /*   By: mda-cunh <mda-cunh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 10:52:50 by mda-cunh          #+#    #+#             */
-/*   Updated: 2024/05/03 13:32:27 by mda-cunh         ###   ########.fr       */
+/*   Updated: 2024/05/06 16:29:23 by mda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ typedef struct s_phiphi
 	unsigned long		last_meal;
 	long				num_meal;
 	bool				dead;
+	t_data				pdata;
 }	t_phiphi;
 
 typedef struct s_data
@@ -35,7 +36,8 @@ typedef struct s_data
 	int				ttsleep;
 	int				requiered_eat;
 	pthread_mutex_t	*fork;
-	pthread_mutex_t mu_write;	
+	pthread_mutex_t mu_write;
+	pthread_mutex_t	mu_death;
 	t_phiphi		*philo;
 }	t_data;
 
