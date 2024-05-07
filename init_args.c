@@ -6,7 +6,7 @@
 /*   By: mda-cunh <mda-cunh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 11:47:56 by mda-cunh          #+#    #+#             */
-/*   Updated: 2024/05/06 14:19:09 by mda-cunh         ###   ########.fr       */
+/*   Updated: 2024/05/07 14:53:33 by mda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,8 @@ int start_mutex(t_data *data)
 			return (free(data->fork), 1);
 	}
 	if (pthread_mutex_init(&data->mu_write, NULL))
+		return (free(data->fork), 1);
+	if (pthread_mutex_init(&data->mu_death, NULL))
 		return (free(data->fork), 1);
 	return (0);	
 }

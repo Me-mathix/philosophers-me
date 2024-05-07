@@ -6,7 +6,7 @@
 /*   By: mda-cunh <mda-cunh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 10:52:50 by mda-cunh          #+#    #+#             */
-/*   Updated: 2024/05/06 16:29:23 by mda-cunh         ###   ########.fr       */
+/*   Updated: 2024/05/07 16:17:48 by mda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ typedef struct s_data
 	int				tteat;
 	int				ttsleep;
 	int				requiered_eat;
+	bool			one_is_dead;
 	pthread_mutex_t	*fork;
 	pthread_mutex_t mu_write;
 	pthread_mutex_t	mu_death;
