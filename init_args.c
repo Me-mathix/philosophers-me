@@ -82,7 +82,7 @@ void init_philo(t_data *data)
 		data->philo->last_meal = 0;
 		data->philo->r_fork = data->fork[i];
 		data->philo->l_fork = data->fork[(1 + i) % data->nb_pilo];
-		data->philo->num_meal = data->requiered_eat;
+		data->philo->num_meal = 0;
 		data->philo->dead = false;
 		i++;
 	}

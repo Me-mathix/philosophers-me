@@ -20,15 +20,24 @@ void eat(t_phiphi *philo)
 		return ;
 	pthread_mutex_lock(&philo->r_fork);
 	printfilo(philo, "has taken a fork");
-	
+	pthread_mutex_lock(&philo->pdata.mu_time);
+	philo->last_meal = ft_timeoftheday();
+	pthread_mutex_unlock(&philo->pdata.mu_time);
+	printfilo(philo, "is eating");
+	philo->num_meal++;
+	ft_usleep(philo->pdata.tteat);	
+	pthread_mutex_unlock(&philo->l_fork);
+	pthread_mutex_unlock(&philo->r_fork);
 }
 
 void sleep(t_phiphi *philo)
 {
-	
+	printfilo(philo, "is sleeping");
+	ft_usleep(philo->pdata.ttsleep);
 }
 
 void think(t_phiphi *philo)
 {
-	
+	printfilo(philo, "is thinking");
+	ft_usleep(1);
 } 

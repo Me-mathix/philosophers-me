@@ -21,9 +21,13 @@ void	*routine(void *arg)
 	while (data->pdata.one_is_dead != true)
 	{
 		pthread_mutex_unlock(&data->pdata.mu_death);
-		eat();
-		sleep();
-		think();
+		eat(data);
+		if (data->num_meal == data->pdata.requiered_eat 
+			&& data->pdata.requiered_eat != -1 || data->pdata.nb_pilo == 1)
+			return (NULL);
+		sleep(data);
+		think(data);
+		pthread_mutex_lock(&data->pdata.mu_death);
 	}
 	pthread_mutex_unlock(&data->pdata.mu_death);
 }
@@ -38,6 +42,9 @@ int launch_philo(t_data *data)
 	{
 		if (pthread_create(&data->philo[i].t_id, NULL, routine, &data->philo[i]))
 			return (2);
+		pthread_mutex_lock(&data->mu_time);
+		data->philo[i].last_meal = ft_timeoftheday();
+		pthread_mutex_unlock(&data->mu_time);
 		i++;
 	}
 	i = 0;

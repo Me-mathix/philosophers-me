@@ -54,3 +54,4 @@ int		ft_atoi(const char *nptr);
 void	*ft_calloc(size_t nmemb, size_t size);
 size_t	ft_timeoftheday(void);
 void	printfilo(t_phiphi *philo, char *action);
+int		ft_usleep(size_t milliseconds);
