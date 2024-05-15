@@ -6,7 +6,7 @@
 /*   By: mda-cunh <mda-cunh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 10:52:50 by mda-cunh          #+#    #+#             */
-/*   Updated: 2024/05/07 16:17:48 by mda-cunh         ###   ########.fr       */
+/*   Updated: 2024/05/15 13:35:53 by mda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 # include <stddef.h>
 # include <stdint.h>
 # include "stdbool.h"
+# include <sys/time.h>
+
 
 typedef struct s_phiphi
 {
@@ -30,6 +32,7 @@ typedef struct s_phiphi
 
 typedef struct s_data
 {
+	unsigned long	start;
 	unsigned int	nb_pilo;
 	int				ttdie;
 	int				tteat;
@@ -39,6 +42,7 @@ typedef struct s_data
 	pthread_mutex_t	*fork;
 	pthread_mutex_t mu_write;
 	pthread_mutex_t	mu_death;
+	pthread_mutex_t	mu_time;
 	t_phiphi		*philo;
 }	t_data;
 
@@ -48,3 +52,5 @@ int		check_args(t_data *data, char **argv);
 //utils.c
 int		ft_atoi(const char *nptr);
 void	*ft_calloc(size_t nmemb, size_t size);
+size_t	ft_timeoftheday(void);
+void	printfilo(t_phiphi *philo, char *action);

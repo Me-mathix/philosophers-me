@@ -6,7 +6,7 @@
 /*   By: mda-cunh <mda-cunh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 12:31:29 by mda-cunh          #+#    #+#             */
-/*   Updated: 2024/05/07 17:20:24 by mda-cunh         ###   ########.fr       */
+/*   Updated: 2024/05/15 12:12:16 by mda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,15 @@ void	*routine(void *arg)
 		sleep();
 		think();
 	}
+	pthread_mutex_unlock(&data->pdata.mu_death);
 }
 
 int launch_philo(t_data *data)
 {
-	int i;
+	int i;	
 	
 	i = 0;
+	data->start = ft_timeoftheday();
 	while (i < data->nb_pilo)
 	{
 		if (pthread_create(&data->philo[i].t_id, NULL, routine, &data->philo[i]))
@@ -39,7 +41,7 @@ int launch_philo(t_data *data)
 		i++;
 	}
 	i = 0;
-	while (i < data->nb_pilo) 
+	while (i < data->nb_pilo)
 	{
 		if (pthread_join(&data->philo[i].t_id, NULL))
 			return (2);

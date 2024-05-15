@@ -6,11 +6,20 @@
 /*   By: mda-cunh <mda-cunh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 11:47:52 by mda-cunh          #+#    #+#             */
-/*   Updated: 2024/05/03 12:01:07 by mda-cunh         ###   ########.fr       */
+/*   Updated: 2024/05/15 12:22:20 by mda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+size_t	ft_timeoftheday(void)
+{
+	struct timeval	time;
+
+	if (gettimeofday(&time, NULL) == -1)
+		write(2, "gettimeofday() error\n", 22);
+	return (time.tv_sec * 1000 + time.tv_usec / 1000);
+}
 
 int	ft_atoi(const char *nptr)
 {
@@ -52,4 +61,17 @@ void	*ft_calloc(size_t nmemb, size_t size)
 		return (NULL);
 	ft_bzero(alloc, nmemb * size);
 	return (alloc);
+}
+
+void	printfilo(t_phiphi *philo, char *action)
+{
+	pthread_mutex_lock(&philo->pdata.mu_write);
+	pthread_mutex_lock(&philo->pdata.mu_death);
+	if (philo->pdata.one_is_dead == false)
+	{
+		printf("%lld %u %s\n",ft_timeoftheday() - philo->pdata.start,
+			philo->id, action);
+	}
+	pthread_mutex_unlock(&philo->pdata.mu_write);
+	pthread_mutex_unlock(&philo->pdata.mu_death);
 }
