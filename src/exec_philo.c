@@ -6,7 +6,7 @@
 /*   By: mda-cunh <mda-cunh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 12:31:29 by mda-cunh          #+#    #+#             */
-/*   Updated: 2024/05/22 15:38:18 by mda-cunh         ###   ########.fr       */
+/*   Updated: 2024/05/22 15:46:53 by mda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,23 +38,23 @@ void	check_for_death(t_data *data)
 	pthread_mutex_lock(&data->mu_death);
 	while (data->one_is_dead == false)
 	{
+		if (i == data->nb_pilo)
+			i = 0;
 		pthread_mutex_unlock(&data->mu_death);
-		while (i < data->nb_pilo)
+		pthread_mutex_lock(&data->mu_time);
+		if (ft_timeoftheday() - data->philo[i].last_meal > data->ttdie)
 		{
-			pthread_mutex_lock(&data->mu_time);
-			if (ft_timeoftheday() - data->philo[i].last_meal > data->ttdie)
-			{
-				pthread_mutex_unlock(&data->mu_time);
-				printfilo(data->philo, "is dead");
-				pthread_mutex_lock(&data->mu_death);
-				data->one_is_dead = true;
-				pthread_mutex_unlock(&data->mu_death);
-			}
 			pthread_mutex_unlock(&data->mu_time);
-			i++;
+			printfilo(data->philo, "is dead");
+			pthread_mutex_lock(&data->mu_death);
+			data->one_is_dead = true;
+			pthread_mutex_unlock(&data->mu_death);
+			break ;
 		}
+		pthread_mutex_unlock(&data->mu_time);
 		if (check_for_other_case(data))
 			break ;
+		i++;
 		pthread_mutex_lock(&data->mu_death);
 	}
 }
