@@ -6,20 +6,11 @@
 /*   By: mda-cunh <mda-cunh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 11:47:52 by mda-cunh          #+#    #+#             */
-/*   Updated: 2024/05/15 12:22:20 by mda-cunh         ###   ########.fr       */
+/*   Updated: 2024/05/21 16:00:00 by mda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
-size_t	ft_timeoftheday(void)
-{
-	struct timeval	time;
-
-	if (gettimeofday(&time, NULL) == -1)
-		write(2, "gettimeofday() error\n", 22);
-	return (time.tv_sec * 1000 + time.tv_usec / 1000);
-}
 
 int	ft_atoi(const char *nptr)
 {
@@ -65,23 +56,38 @@ void	*ft_calloc(size_t nmemb, size_t size)
 
 void	printfilo(t_phiphi *philo, char *action)
 {
-	pthread_mutex_lock(&philo->pdata.mu_write);
-	pthread_mutex_lock(&philo->pdata.mu_death);
-	if (philo->pdata.one_is_dead == false)
+	pthread_mutex_lock(&philo->pdata->mu_write);
+	pthread_mutex_lock(&philo->pdata->mu_death);
+	if (philo->pdata->one_is_dead == false)
 	{
-		printf("%lld %u %s\n",ft_timeoftheday() - philo->pdata.start,
+		printf("%lu %u %s\n",ft_timeoftheday() - philo->pdata->start,
 			philo->id, action);
 	}
-	pthread_mutex_unlock(&philo->pdata.mu_write);
-	pthread_mutex_unlock(&philo->pdata.mu_death);
+	pthread_mutex_unlock(&philo->pdata->mu_write);
+	pthread_mutex_unlock(&philo->pdata->mu_death);
 }
 
-int	ft_usleep(size_t milliseconds)
+size_t	ft_timeoftheday(void)
+{
+	struct timeval	time;
+
+	if (gettimeofday(&time, NULL) == -1)
+		write(2, "gettimeofday() error\n", 22);
+	return (time.tv_sec * 1000 + time.tv_usec / 1000);
+}
+
+int	ft_usleep(t_data *data, size_t milliseconds)
 {
 	size_t	start;
 
-	start = get_current_time();
-	while ((get_current_time() - start) < milliseconds)
+	pthread_mutex_lock(&data->mu_time);
+	start = ft_timeoftheday();
+	while (((ft_timeoftheday() - start) < milliseconds))
+	{
+		pthread_mutex_unlock(&data->mu_time);
 		usleep(500);
+		pthread_mutex_lock(&data->mu_time);
+	}
+	pthread_mutex_unlock(&data->mu_time);
 	return (0);
 }

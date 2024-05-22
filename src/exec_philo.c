@@ -6,7 +6,7 @@
 /*   By: mda-cunh <mda-cunh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 12:31:29 by mda-cunh          #+#    #+#             */
-/*   Updated: 2024/05/15 12:12:16 by mda-cunh         ###   ########.fr       */
+/*   Updated: 2024/05/21 16:14:48 by mda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,24 +17,27 @@ void	*routine(void *arg)
 	t_phiphi *data;
 
 	data = (t_phiphi *)arg;
-	pthread_mutex_lock(&data->pdata.mu_death);
-	while (data->pdata.one_is_dead != true)
+	if ((data->id - 1) % 2)
+		ft_usleep(data->pdata, 1);
+	pthread_mutex_lock(&data->pdata->mu_death);
+	while (data->pdata->one_is_dead != true)
 	{
-		pthread_mutex_unlock(&data->pdata.mu_death);
+		pthread_mutex_unlock(&data->pdata->mu_death);
 		eat(data);
-		if (data->num_meal == data->pdata.requiered_eat 
-			&& data->pdata.requiered_eat != -1 || data->pdata.nb_pilo == 1)
+		if ((data->num_meal == data->pdata->requiered_eat 
+			&& data->pdata->requiered_eat != -1) || data->pdata->nb_pilo == 1)
 			return (NULL);
-		sleep(data);
+		ph_sleep(data);
 		think(data);
-		pthread_mutex_lock(&data->pdata.mu_death);
+		pthread_mutex_lock(&data->pdata->mu_death);
 	}
-	pthread_mutex_unlock(&data->pdata.mu_death);
+	pthread_mutex_unlock(&data->pdata->mu_death);
+	return (NULL);
 }
 
 int launch_philo(t_data *data)
 {
-	int i;	
+	unsigned int i;	
 	
 	i = 0;
 	data->start = ft_timeoftheday();
@@ -50,10 +53,14 @@ int launch_philo(t_data *data)
 	i = 0;
 	while (i < data->nb_pilo)
 	{
-		if (pthread_join(&data->philo[i].t_id, NULL))
+		if (pthread_join(data->philo[i].t_id, NULL))
 			return (2);
 		i++;
 	}
-	
-	
+	pthread_mutex_destroy(&data->mu_death);
+	pthread_mutex_destroy(&data->mu_time);
+	pthread_mutex_destroy(&data->mu_write);
+	for (size_t i = 0; i < data->nb_pilo; i++) 
+		pthread_mutex_destroy(&data->fork[i]);
+	return(0);
 }

@@ -6,7 +6,7 @@
 /*   By: mda-cunh <mda-cunh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 11:47:56 by mda-cunh          #+#    #+#             */
-/*   Updated: 2024/05/07 14:53:33 by mda-cunh         ###   ########.fr       */
+/*   Updated: 2024/05/21 15:51:09 by mda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	is_only_numeric(char **tab)
 	while (tab[i])
 	{
 		while (tab[i][j])
-			if (!ft_isdigit(tab[i][j++]))
+			if (tab[i][j++] < 48 && tab[i][j++] > 57)
 				return (1);
 		j = 0;
 		i++;
@@ -38,6 +38,7 @@ int check_args(t_data *data, char **argv)
 	data->ttdie = ft_atoi(argv[2]);
 	data->tteat = ft_atoi(argv[3]);
 	data->ttsleep = ft_atoi(argv[4]);
+	data->one_is_dead = false;
 	data->requiered_eat = -1;
 	if (argv[5])
 	{
@@ -53,7 +54,7 @@ int check_args(t_data *data, char **argv)
 
 int start_mutex(t_data *data)
 {
-	int i;
+	unsigned int i;
 
 	i = 0;
 	data->fork = ft_calloc((sizeof (pthread_mutex_t)), data->nb_pilo);
@@ -68,27 +69,30 @@ int start_mutex(t_data *data)
 		return (free(data->fork), 1);
 	if (pthread_mutex_init(&data->mu_death, NULL))
 		return (free(data->fork), 1);
+	if (pthread_mutex_init(&data->mu_time, NULL))
+		return (free(data->fork), 1);
 	return (0);	
 }
 
 void init_philo(t_data *data)
 {
-	int i;
+	unsigned int i;
 
 	i = 0;
 	while(i < data->nb_pilo)
 	{
-		data->philo->id = i + 1;
-		data->philo->last_meal = 0;
-		data->philo->r_fork = data->fork[i];
-		data->philo->l_fork = data->fork[(1 + i) % data->nb_pilo];
-		data->philo->num_meal = 0;
-		data->philo->dead = false;
+		data->philo[i].id = i + 1;
+		data->philo[i].last_meal = 0;
+		data->philo[i].r_fork = data->fork[i];
+		data->philo[i].l_fork = data->fork[(1 + i) % data->nb_pilo];
+		data->philo[i].num_meal = 0;
+		data->philo[i].pdata = data;
+		data->philo[i].dead = false;
 		i++;
 	}
 }
 
-int parse_args(t_data *data, char **argv)
+int parse_args(t_data *data)
 {
 	if (start_mutex(data))
 		return (1);

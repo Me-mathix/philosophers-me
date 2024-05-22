@@ -6,16 +6,18 @@
 /*   By: mda-cunh <mda-cunh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 10:52:50 by mda-cunh          #+#    #+#             */
-/*   Updated: 2024/05/15 13:35:53 by mda-cunh         ###   ########.fr       */
+/*   Updated: 2024/05/21 14:36:44 by mda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "stdlib.h"
 # include "pthread.h"
+# include <stdio.h>
 # include <stddef.h>
 # include <stdint.h>
 # include "stdbool.h"
 # include <sys/time.h>
+# include <unistd.h>
 
 
 typedef struct s_phiphi
@@ -27,7 +29,7 @@ typedef struct s_phiphi
 	unsigned long		last_meal;
 	long				num_meal;
 	bool				dead;
-	t_data				pdata;
+	struct s_data		*pdata;
 }	t_phiphi;
 
 typedef struct s_data
@@ -48,10 +50,22 @@ typedef struct s_data
 
 //init_args.c
 int		check_args(t_data *data, char **argv);
+int		parse_args(t_data *data);
+
+//exec_philo.c
+int		launch_philo(t_data *data);
 
 //utils.c
 int		ft_atoi(const char *nptr);
 void	*ft_calloc(size_t nmemb, size_t size);
 size_t	ft_timeoftheday(void);
 void	printfilo(t_phiphi *philo, char *action);
-int		ft_usleep(size_t milliseconds);
+int		ft_usleep(t_data *data, size_t milliseconds);
+
+//utils2.c
+void	ft_bzero(void *s, size_t n);
+
+//action.c
+void	eat(t_phiphi *philo);
+void	ph_sleep(t_phiphi *philo);
+void	think(t_phiphi *philo);
