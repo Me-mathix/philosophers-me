@@ -6,7 +6,7 @@
 /*   By: mda-cunh <mda-cunh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 10:47:09 by mda-cunh          #+#    #+#             */
-/*   Updated: 2024/05/17 14:47:05 by mda-cunh         ###   ########.fr       */
+/*   Updated: 2024/05/22 14:42:36 by mda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int main(int argc, char **argv)
 		exit(123);
 	if (parse_args(&data))
 		exit(123);
-	if (printf("%d",launch_philo(&data)))
+	if (launch_philo(&data))
 		exit(123);
 	return (0);
 }

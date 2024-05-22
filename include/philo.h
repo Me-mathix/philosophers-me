@@ -6,7 +6,7 @@
 /*   By: mda-cunh <mda-cunh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 10:52:50 by mda-cunh          #+#    #+#             */
-/*   Updated: 2024/05/21 14:36:44 by mda-cunh         ###   ########.fr       */
+/*   Updated: 2024/05/22 14:27:21 by mda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,9 @@ typedef struct s_data
 {
 	unsigned long	start;
 	unsigned int	nb_pilo;
-	int				ttdie;
-	int				tteat;
-	int				ttsleep;
+	unsigned int	ttdie;
+	unsigned int	tteat;
+	unsigned int	ttsleep;
 	int				requiered_eat;
 	bool			one_is_dead;
 	pthread_mutex_t	*fork;

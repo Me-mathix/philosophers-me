@@ -6,11 +6,58 @@
 /*   By: mda-cunh <mda-cunh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 12:31:29 by mda-cunh          #+#    #+#             */
-/*   Updated: 2024/05/21 16:14:48 by mda-cunh         ###   ########.fr       */
+/*   Updated: 2024/05/22 15:38:18 by mda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+int check_for_other_case(t_data *data)
+{
+	unsigned int count;
+	unsigned int i;
+
+	count = 0;
+	i = 0;
+	while (i < data->nb_pilo)
+	{
+		if (data->philo[i].num_meal == data->requiered_eat)
+			count++;
+		i++;
+	}
+	if (count == data->nb_pilo)
+		return (1);
+	return (0);
+}
+
+void	check_for_death(t_data *data)
+{
+	unsigned int	i;
+
+	i = 0;
+	pthread_mutex_lock(&data->mu_death);
+	while (data->one_is_dead == false)
+	{
+		pthread_mutex_unlock(&data->mu_death);
+		while (i < data->nb_pilo)
+		{
+			pthread_mutex_lock(&data->mu_time);
+			if (ft_timeoftheday() - data->philo[i].last_meal > data->ttdie)
+			{
+				pthread_mutex_unlock(&data->mu_time);
+				printfilo(data->philo, "is dead");
+				pthread_mutex_lock(&data->mu_death);
+				data->one_is_dead = true;
+				pthread_mutex_unlock(&data->mu_death);
+			}
+			pthread_mutex_unlock(&data->mu_time);
+			i++;
+		}
+		if (check_for_other_case(data))
+			break ;
+		pthread_mutex_lock(&data->mu_death);
+	}
+}
 
 void	*routine(void *arg)
 {
@@ -20,7 +67,7 @@ void	*routine(void *arg)
 	if ((data->id - 1) % 2)
 		ft_usleep(data->pdata, 1);
 	pthread_mutex_lock(&data->pdata->mu_death);
-	while (data->pdata->one_is_dead != true)
+	while (data->pdata->one_is_dead == false)
 	{
 		pthread_mutex_unlock(&data->pdata->mu_death);
 		eat(data);
@@ -50,6 +97,7 @@ int launch_philo(t_data *data)
 		pthread_mutex_unlock(&data->mu_time);
 		i++;
 	}
+	check_for_death(data);
 	i = 0;
 	while (i < data->nb_pilo)
 	{

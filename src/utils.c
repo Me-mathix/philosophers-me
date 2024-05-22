@@ -6,7 +6,7 @@
 /*   By: mda-cunh <mda-cunh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 11:47:52 by mda-cunh          #+#    #+#             */
-/*   Updated: 2024/05/21 16:00:00 by mda-cunh         ###   ########.fr       */
+/*   Updated: 2024/05/22 15:31:16 by mda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,8 @@ int	ft_usleep(t_data *data, size_t milliseconds)
 
 	pthread_mutex_lock(&data->mu_time);
 	start = ft_timeoftheday();
-	while (((ft_timeoftheday() - start) < milliseconds))
+	while (((ft_timeoftheday() - start) < milliseconds) &&
+			data->one_is_dead == false)
 	{
 		pthread_mutex_unlock(&data->mu_time);
 		usleep(500);
