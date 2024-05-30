@@ -1,7 +1,7 @@
 NAME			:= philo
 SRC_DIR			:= src
 OBJ_DIR			:= obj
-SRCS			:= main.c init_args.c exec_philo.c actions.c utils.c utils2.c
+SRCS			:= main.c init_args.c exec_philo.c actions.c utils.c utils2.c exit.c
 #commande shell pour les src: ls src/. | tr "\n" " " > oui | cat; rm oui
 SRCS			:= $(SRCS:%=$(SRC_DIR)/%)
 OBJS			:= $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)

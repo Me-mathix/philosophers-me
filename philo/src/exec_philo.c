@@ -6,7 +6,7 @@
 /*   By: mda-cunh <mda-cunh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 12:31:29 by mda-cunh          #+#    #+#             */
-/*   Updated: 2024/05/29 15:18:59 by mda-cunh         ###   ########.fr       */
+/*   Updated: 2024/05/30 14:55:13 by mda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	check_for_death(t_data *data)
 		if (ft_timeoftheday() - data->philo[i].last_meal > data->ttdie)
 		{
 			pthread_mutex_unlock(&data->mu_time);
-			printfilo(data->philo, "is dead");
+			printfilo(data->philo, "died");
 			pthread_mutex_lock(&data->mu_death);
 			data->one_is_dead = true;
 			pthread_mutex_unlock(&data->mu_death);
@@ -107,11 +107,6 @@ int launch_philo(t_data *data)
 			return (2);
 		i++;
 	}
-	pthread_mutex_destroy(&data->mu_death);
-	pthread_mutex_destroy(&data->mu_time);
-	pthread_mutex_destroy(&data->mu_write);
-	pthread_mutex_destroy(&data->mu_eat);
-	for (size_t i = 0; i < data->nb_pilo; i++) 
-		pthread_mutex_destroy(&data->fork[i]);
+	exit_philo(data);
 	return(0);
 }

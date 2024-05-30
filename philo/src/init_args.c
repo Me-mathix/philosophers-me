@@ -6,7 +6,7 @@
 /*   By: mda-cunh <mda-cunh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 11:47:56 by mda-cunh          #+#    #+#             */
-/*   Updated: 2024/05/29 15:00:06 by mda-cunh         ###   ########.fr       */
+/*   Updated: 2024/05/30 14:42:57 by mda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,14 @@ int	is_only_numeric(char **tab)
 	int		i;
 	int		j;
 
-	i = 0;
-	j = 0;
-	while (tab[i])
+	i = 1;
+	j = -1;
+	while (tab[i]) 
 	{
-		while (tab[i][j])
-			if (tab[i][j++] < 48 && tab[i][j++] > 57)
-				return (1);
-		j = 0;
+		while (tab[i][++j])
+			if (!(tab[i][j] >= '0' && tab[i][j] <= '9'))
+				return(1);
+		j = -1;
 		i++;
 	}
 	return (0);

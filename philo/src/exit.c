@@ -1,28 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mda-cunh <mda-cunh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/03 10:47:09 by mda-cunh          #+#    #+#             */
-/*   Updated: 2024/05/30 12:22:32 by mda-cunh         ###   ########.fr       */
+/*   Created: 2024/05/30 14:19:28 by mda-cunh          #+#    #+#             */
+/*   Updated: 2024/05/30 14:27:12 by mda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int main(int argc, char **argv)
+void exit_philo(t_data *data)
 {
-	t_data data;
+	unsigned int i;
 	
-	if (argc != 5 && argc != 6)
-		exit(123);
-	if (check_args(&data, argv))
-		exit(99);
-	if (parse_args(&data))
-		exit(123);
-	if (launch_philo(&data))
-		exit(123);
-	return (0);
+	i = 0;
+	pthread_mutex_destroy(&data->mu_death);
+	pthread_mutex_destroy(&data->mu_time);
+	pthread_mutex_destroy(&data->mu_write);
+	pthread_mutex_destroy(&data->mu_eat);
+	while (i < data->nb_pilo) 
+		pthread_mutex_destroy(&data->fork[i++]);
+	free(data->philo);
+	free(data->fork);
 }

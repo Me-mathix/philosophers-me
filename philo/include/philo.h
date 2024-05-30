@@ -6,7 +6,7 @@
 /*   By: mda-cunh <mda-cunh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 10:52:50 by mda-cunh          #+#    #+#             */
-/*   Updated: 2024/05/29 14:59:34 by mda-cunh         ###   ########.fr       */
+/*   Updated: 2024/05/30 14:44:02 by mda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,3 +71,6 @@ void	dying(t_phiphi *philo);
 void	eat(t_phiphi *philo);
 void	ph_sleep(t_phiphi *philo);
 void	think(t_phiphi *philo);
+
+//
+void	exit_philo(t_data *data);
