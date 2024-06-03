@@ -1,33 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   error_handle.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mda-cunh <mda-cunh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/03 10:47:09 by mda-cunh          #+#    #+#             */
-/*   Updated: 2024/06/03 14:02:44 by mda-cunh         ###   ########.fr       */
+/*   Created: 2024/06/03 13:36:22 by mda-cunh          #+#    #+#             */
+/*   Updated: 2024/06/03 14:41:48 by mda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int main(int argc, char **argv)
+void	ft_putendl_fd(char *s, int fd)
 {
-	t_data data;
-	int 	err;
+	if (!s)
+		return ;
+	while (*s)
+		write(fd, s++, 1);
+	write(fd, "\n", 1);
+}
 
-	err = 0;
-	if (argc != 5 && argc != 6)
-		ft_exit_error(&data, 0);
-	err = check_args(&data, argv);
-	if (err)
-		ft_exit_error(&data, err);
-	err = parse_args(&data);
-	if (err)
-		ft_exit_error(&data, err);
-	err = launch_philo(&data);
-	if (err)
-		ft_exit_error(&data, err);
-	return (0);
+void	ft_exit_error(t_data *data, int err)
+{
+	(void) data;
+	
+	if (err == 0)
+		ft_putendl_fd("Wrong count of arguments", 2);
+	if (err == 1)
+		ft_putendl_fd("a value is NULL or forbidden", 2);
+	if (err == 2)
+		ft_putendl_fd("Failed to initalize philo", 2);
+	exit(1);
 }

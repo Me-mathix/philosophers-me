@@ -6,13 +6,13 @@
 /*   By: mda-cunh <mda-cunh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 11:47:52 by mda-cunh          #+#    #+#             */
-/*   Updated: 2024/05/29 15:20:35 by mda-cunh         ###   ########.fr       */
+/*   Updated: 2024/06/03 14:30:05 by mda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	ft_atoi(const char *nptr)
+unsigned int	ft_atoi(const char *nptr)
 {
 	long	nbr;
 	long	neg;

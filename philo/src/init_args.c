@@ -6,7 +6,7 @@
 /*   By: mda-cunh <mda-cunh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 11:47:56 by mda-cunh          #+#    #+#             */
-/*   Updated: 2024/05/30 14:42:57 by mda-cunh         ###   ########.fr       */
+/*   Updated: 2024/06/03 14:39:39 by mda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,12 +43,12 @@ int check_args(t_data *data, char **argv)
 	if (argv[5])
 	{
 		data->requiered_eat = ft_atoi(argv[5]);
-		if (data->requiered_eat < 0)
-			return (2);
+		if (data->requiered_eat <= 0)
+			return (1);
 	}
 	if (data->nb_pilo <= 0 || data->ttdie <= 0 || data->tteat <= 0
 		|| data->ttsleep <= 0)
-		return (2);
+		return (1);
 	return (0);
 }
 
@@ -97,10 +97,10 @@ void init_philo(t_data *data)
 int parse_args(t_data *data)
 {
 	if (start_mutex(data))
-		return (1);
+		return (2);
 	data->philo = ft_calloc((sizeof (t_phiphi)), data->nb_pilo);
 	if (!data->philo)
-		return (2);
+		return (free(data->fork), 2);
 	init_philo(data);
 	return (0);	
 }

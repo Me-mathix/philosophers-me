@@ -6,7 +6,7 @@
 /*   By: mda-cunh <mda-cunh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 10:52:50 by mda-cunh          #+#    #+#             */
-/*   Updated: 2024/05/30 14:44:02 by mda-cunh         ###   ########.fr       */
+/*   Updated: 2024/06/03 14:31:02 by mda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,27 +50,31 @@ typedef struct s_data
 }	t_data;
 
 //init_args.c
-int		check_args(t_data *data, char **argv);
-int		parse_args(t_data *data);
+int				check_args(t_data *data, char **argv);
+int				parse_args(t_data *data);
 
 //exec_philo.c
-int		launch_philo(t_data *data);
+int				launch_philo(t_data *data);
 
 //utils.c
-int		ft_atoi(const char *nptr);
-void	*ft_calloc(size_t nmemb, size_t size);
-size_t	ft_timeoftheday(void);
-void	printfilo(t_phiphi *philo, char *action);
-int		ft_usleep(t_data *data, size_t milliseconds);
+unsigned int	ft_atoi(const char *nptr);
+void			*ft_calloc(size_t nmemb, size_t size);
+size_t			ft_timeoftheday(void);
+void			printfilo(t_phiphi *philo, char *action);
+int				ft_usleep(t_data *data, size_t milliseconds);
 
 //utils2.c
-void	ft_bzero(void *s, size_t n);
+void			ft_bzero(void *s, size_t n);
 
 //action.c
-void	dying(t_phiphi *philo);
-void	eat(t_phiphi *philo);
-void	ph_sleep(t_phiphi *philo);
-void	think(t_phiphi *philo);
+void			dying(t_phiphi *philo);
+void			eat(t_phiphi *philo);
+void			ph_sleep(t_phiphi *philo);
+void			think(t_phiphi *philo);
 
-//
-void	exit_philo(t_data *data);
+// exit.c
+void			exit_philo(t_data *data);
+
+// error_handle.c
+void			ft_exit_error(t_data *data, int err);
+
