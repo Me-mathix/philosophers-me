@@ -6,7 +6,7 @@
 /*   By: mda-cunh <mda-cunh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 12:31:29 by mda-cunh          #+#    #+#             */
-/*   Updated: 2024/06/03 15:17:20 by mda-cunh         ###   ########.fr       */
+/*   Updated: 2024/06/03 15:51:58 by mda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ int	check_for_other_case(t_data *data)
 			count++;
 		pthread_mutex_unlock(&data->mu_eat);
 		i++;
+		usleep(1);
 	}
 	if (count == data->nb_pilo)
 		return (1);

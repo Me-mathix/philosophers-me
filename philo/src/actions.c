@@ -6,7 +6,7 @@
 /*   By: mda-cunh <mda-cunh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 14:48:31 by mda-cunh          #+#    #+#             */
-/*   Updated: 2024/06/03 15:16:55 by mda-cunh         ###   ########.fr       */
+/*   Updated: 2024/06/03 15:52:54 by mda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,10 @@ void	eat(t_phiphi *philo)
 	printfilo(philo, "has taken a fork");
 	if (philo->pdata->nb_pilo == 1)
 		return ((void) pthread_mutex_unlock(&data->fork[philo->l_fork]));
-	if (philo->id % 2 == 0)
-		pthread_mutex_lock(&data->fork[philo->l_fork]);
-	else
+	if (philo->id % 2)
 		pthread_mutex_lock(&data->fork[philo->r_fork]);
+	else
+		pthread_mutex_lock(&data->fork[philo->l_fork]);
 	printfilo(philo, "has taken a fork");
 	pthread_mutex_lock(&data->mu_time);
 	philo->last_meal = ft_timeoftheday();

@@ -7,7 +7,7 @@ SRCS			:= $(SRCS:%=$(SRC_DIR)/%)
 OBJS			:= $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 DEPS			:= $(OBJS:.o=.d)
 CC				:= cc
-CFLAGS			:= -Wall -Wextra -Werror -pthread
+CFLAGS			:= -Wall -Wextra -Werror -pthread -g3
 CPPFLAGS		:= -MMD -MP -I include
 #CFLAGS			:= -g3 -Iinclude
 RM				:= rm -rf
