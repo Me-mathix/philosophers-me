@@ -6,9 +6,12 @@
 /*   By: mda-cunh <mda-cunh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 10:52:50 by mda-cunh          #+#    #+#             */
-/*   Updated: 2024/06/03 14:31:02 by mda-cunh         ###   ########.fr       */
+/*   Updated: 2024/06/03 15:18:37 by mda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#ifndef PHILO_H
+# define PHILO_H
 
 # include "stdlib.h"
 # include "pthread.h"
@@ -18,7 +21,6 @@
 # include "stdbool.h"
 # include <sys/time.h>
 # include <unistd.h>
-
 
 typedef struct s_phiphi
 {
@@ -42,7 +44,7 @@ typedef struct s_data
 	int				requiered_eat;
 	bool			one_is_dead;
 	pthread_mutex_t	*fork;
-	pthread_mutex_t mu_write;
+	pthread_mutex_t	mu_write;
 	pthread_mutex_t	mu_death;
 	pthread_mutex_t	mu_time;
 	pthread_mutex_t	mu_eat;
@@ -76,5 +78,6 @@ void			think(t_phiphi *philo);
 void			exit_philo(t_data *data);
 
 // error_handle.c
-void			ft_exit_error(t_data *data, int err);
+void			ft_exit_error(int err);
 
+#endif

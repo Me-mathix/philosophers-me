@@ -6,7 +6,7 @@
 /*   By: mda-cunh <mda-cunh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 11:47:56 by mda-cunh          #+#    #+#             */
-/*   Updated: 2024/06/03 14:39:39 by mda-cunh         ###   ########.fr       */
+/*   Updated: 2024/06/03 15:03:20 by mda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,18 +19,18 @@ int	is_only_numeric(char **tab)
 
 	i = 1;
 	j = -1;
-	while (tab[i]) 
+	while (tab[i])
 	{
 		while (tab[i][++j])
 			if (!(tab[i][j] >= '0' && tab[i][j] <= '9'))
-				return(1);
+				return (1);
 		j = -1;
 		i++;
 	}
 	return (0);
 }
 
-int check_args(t_data *data, char **argv)
+int	check_args(t_data *data, char **argv)
 {
 	if (is_only_numeric(argv))
 		return (1);
@@ -52,9 +52,9 @@ int check_args(t_data *data, char **argv)
 	return (0);
 }
 
-int start_mutex(t_data *data)
+int	start_mutex(t_data *data)
 {
-	unsigned int i;
+	unsigned int	i;
 
 	i = 0;
 	data->fork = ft_calloc((sizeof (pthread_mutex_t)), data->nb_pilo);
@@ -73,15 +73,15 @@ int start_mutex(t_data *data)
 		return (free(data->fork), 1);
 	if (pthread_mutex_init(&data->mu_eat, NULL))
 		return (free(data->fork), 1);
-	return (0);	
+	return (0);
 }
 
-void init_philo(t_data *data)
+void	init_philo(t_data *data)
 {
-	unsigned int i;
+	unsigned int	i;
 
 	i = 0;
-	while(i < data->nb_pilo)
+	while (i < data->nb_pilo)
 	{
 		data->philo[i].id = i + 1;
 		data->philo[i].last_meal = 0;
@@ -94,7 +94,7 @@ void init_philo(t_data *data)
 	}
 }
 
-int parse_args(t_data *data)
+int	parse_args(t_data *data)
 {
 	if (start_mutex(data))
 		return (2);
@@ -102,5 +102,5 @@ int parse_args(t_data *data)
 	if (!data->philo)
 		return (free(data->fork), 2);
 	init_philo(data);
-	return (0);	
+	return (0);
 }

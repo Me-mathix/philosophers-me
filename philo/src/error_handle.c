@@ -6,7 +6,7 @@
 /*   By: mda-cunh <mda-cunh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 13:36:22 by mda-cunh          #+#    #+#             */
-/*   Updated: 2024/06/03 14:41:48 by mda-cunh         ###   ########.fr       */
+/*   Updated: 2024/06/03 15:19:12 by mda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,8 @@ void	ft_putendl_fd(char *s, int fd)
 	write(fd, "\n", 1);
 }
 
-void	ft_exit_error(t_data *data, int err)
+void	ft_exit_error(int err)
 {
-	(void) data;
-	
 	if (err == 0)
 		ft_putendl_fd("Wrong count of arguments", 2);
 	if (err == 1)

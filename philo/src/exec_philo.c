@@ -6,16 +6,16 @@
 /*   By: mda-cunh <mda-cunh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 12:31:29 by mda-cunh          #+#    #+#             */
-/*   Updated: 2024/06/03 14:27:26 by mda-cunh         ###   ########.fr       */
+/*   Updated: 2024/06/03 15:17:20 by mda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int check_for_other_case(t_data *data)
+int	check_for_other_case(t_data *data)
 {
-	unsigned int count;
-	unsigned int i;
+	unsigned int	count;
+	unsigned int	i;
 
 	count = 0;
 	i = 0;
@@ -63,7 +63,7 @@ void	check_for_death(t_data *data)
 
 void	*routine(void *arg)
 {
-	t_phiphi *data;
+	t_phiphi	*data;
 
 	data = (t_phiphi *)arg;
 	if ((data->id - 1) % 2)
@@ -73,8 +73,9 @@ void	*routine(void *arg)
 	{
 		pthread_mutex_unlock(&data->pdata->mu_death);
 		eat(data);
-		if ((data->num_meal == data->pdata->requiered_eat 
-			&& data->pdata->requiered_eat != -1) || data->pdata->nb_pilo == 1)
+		if ((data->num_meal == data->pdata->requiered_eat
+				&& data->pdata->requiered_eat != -1)
+			|| data->pdata->nb_pilo == 1)
 			return (NULL);
 		ph_sleep(data);
 		think(data);
@@ -84,16 +85,17 @@ void	*routine(void *arg)
 	return (NULL);
 }
 
-int launch_philo(t_data *data)
+int	launch_philo(t_data *data)
 {
-	unsigned int i;	
-	
+	unsigned int	i;	
+
 	i = 0;
 	data->start = ft_timeoftheday();
 	while (i < data->nb_pilo)
 	{
-		if (pthread_create(&data->philo[i].t_id, NULL, routine, &data->philo[i]))
-			return (2);
+		if (pthread_create(&data->philo[i].t_id, NULL,
+				routine, &data->philo[i]))
+			return (1);
 		pthread_mutex_lock(&data->mu_time);
 		data->philo[i].last_meal = ft_timeoftheday();
 		pthread_mutex_unlock(&data->mu_time);
@@ -104,9 +106,9 @@ int launch_philo(t_data *data)
 	while (i < data->nb_pilo)
 	{
 		if (pthread_join(data->philo[i].t_id, NULL))
-			return (2);
+			return (1);
 		i++;
 	}
 	exit_philo(data);
-	return(0);
+	return (0);
 }

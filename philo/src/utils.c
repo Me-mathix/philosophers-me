@@ -6,7 +6,7 @@
 /*   By: mda-cunh <mda-cunh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 11:47:52 by mda-cunh          #+#    #+#             */
-/*   Updated: 2024/06/03 14:30:05 by mda-cunh         ###   ########.fr       */
+/*   Updated: 2024/06/03 15:01:25 by mda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	printfilo(t_phiphi *philo, char *action)
 	pthread_mutex_lock(&philo->pdata->mu_death);
 	if (philo->pdata->one_is_dead == false)
 	{
-		printf("%lu %u %s\n",ft_timeoftheday() - philo->pdata->start,
+		printf("%lu %u %s\n", ft_timeoftheday() - philo->pdata->start,
 			philo->id, action);
 	}
 	pthread_mutex_unlock(&philo->pdata->mu_write);
@@ -83,8 +83,8 @@ int	ft_usleep(t_data *data, size_t milliseconds)
 	pthread_mutex_lock(&data->mu_time);
 	pthread_mutex_lock(&data->mu_death);
 	start = ft_timeoftheday();
-	while (((ft_timeoftheday() - start) < milliseconds) &&
-			data->one_is_dead == false)
+	while (((ft_timeoftheday() - start) < milliseconds)
+		&& data->one_is_dead == false)
 	{
 		pthread_mutex_unlock(&data->mu_death);
 		pthread_mutex_unlock(&data->mu_time);
