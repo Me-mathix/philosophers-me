@@ -6,7 +6,7 @@
 /*   By: mda-cunh <mda-cunh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 13:36:22 by mda-cunh          #+#    #+#             */
-/*   Updated: 2024/06/03 15:19:12 by mda-cunh         ###   ########.fr       */
+/*   Updated: 2024/06/03 15:23:50 by mda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,5 +29,4 @@ void	ft_exit_error(int err)
 		ft_putendl_fd("a value is NULL or forbidden", 2);
 	if (err == 2)
 		ft_putendl_fd("Failed to initalize philo", 2);
-	exit(1);
 }
